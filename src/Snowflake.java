@@ -35,19 +35,6 @@ class Snowflake extends GCompound {
         return poly;
     }
 
-
-    public int dY() {
-        return getdY();
-    }
-
-    public double phase() {
-        return getPhase();
-    }
-
-    public double amplitude() {
-        return getAmplitude();
-    }
-
     private double probablyNegative(double x) {
         if (rnd.nextBoolean()) {
             return x;
