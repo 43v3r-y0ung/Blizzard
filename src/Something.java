@@ -10,6 +10,15 @@ public class Something extends WindowProgram {
 
     ArrayList<Snowflake> snow = new ArrayList<>();
     RandomGenerator rnd = new RandomGenerator();
+    private double wind = 0;
+
+    public double getWind() {
+        return wind;
+    }
+
+    public void setWind(double wind) {
+        this.wind = wind;
+    }
 
     public void run() {
         getMenuBar().setVisible(false);
@@ -20,14 +29,14 @@ public class Something extends WindowProgram {
 
     private void makeItSnow() {
         createSnow();
-        while(true){
+        while (true) {
             for (Snowflake snowflake : snow) {
-                double dX = (snowflake.amplitude * Math.sin(snowflake.phase)) / snowflake.dY;
-                snowflake.move(dX, snowflake.dY);
-                snowflake.polygon.rotate(snowflake.rotation);
-                snowflake.phase += 0.1;
-                if (snowflake.phase >= 360) {
-                    snowflake.phase = 0;
+                double dX = (snowflake.getAmplitude() * Math.sin(snowflake.getPhase())) / snowflake.getdY();
+                snowflake.move(dX + getWind(), snowflake.getdY());
+                snowflake.getPolygon().rotate(snowflake.getRotation());
+                snowflake.setPhase(snowflake.getPhase() + 0.1);
+                if (snowflake.getPhase() >= 360) {
+                    snowflake.setPhase(0);
                 }
                 if (snowflake.getY() >= getHeight()) {
                     snowflake.setLocation(rnd.nextDouble(0, getWidth()), 0);
@@ -40,18 +49,29 @@ public class Something extends WindowProgram {
 
     private void createSnow() {
 
-        for (int i = 0; i < SNOW_COUNT; i++){
+        for (int i = 0; i < SNOW_COUNT; i++) {
             Snowflake snowflake = new Snowflake();
             snow.add(snowflake);
-            add(snowflake, rnd.nextDouble(0 , getWidth()), rnd.nextDouble(0 , getHeight()));
+            add(snowflake, rnd.nextDouble(0, getWidth()), rnd.nextDouble(0, getHeight()));
         }
     }
 
-    public void mouseClicked(MouseEvent e){
+    public void mouseClicked(MouseEvent e) {
         for (Snowflake snowflake : snow) {
-            snowflake.setColor(rnd.nextColor());
-            System.out.println("Color changed");
+            snowflake.getPolygon().setColor(rnd.nextColor());
         }
     }
 
+    public void mouseMoved(MouseEvent h) {
+        double width = getWidth() / 2.0;
+        if (h.getX() <= width) {
+            setWind(-((width - h.getX()) / 100));
+        } else {
+            setWind((h.getX() - width) / 100);
+        }
+    }
+
+    public void mouseExited(MouseEvent e) {
+        setWind(0);
+    }
 }

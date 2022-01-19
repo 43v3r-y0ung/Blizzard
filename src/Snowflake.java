@@ -4,17 +4,17 @@ import acm.util.RandomGenerator;
 
 class Snowflake extends GCompound {
     RandomGenerator rnd = new RandomGenerator();
-    public int dY;
-    public double phase;
-    public double amplitude;
-    public double rotation;
-    public GPolygon polygon;
+    private int dY;
+    private double phase;
+    private double amplitude;
+    private double rotation;
+    private GPolygon polygon;
 
 
     public Snowflake() {
         GPolygon snowflake = makePolygon();
         add(snowflake);
-        this.polygon = snowflake;
+        this.setPolygon(snowflake);
         reset();
     }
 
@@ -37,15 +37,15 @@ class Snowflake extends GCompound {
 
 
     public int dY() {
-        return dY;
+        return getdY();
     }
 
     public double phase() {
-        return phase;
+        return getPhase();
     }
 
     public double amplitude() {
-        return amplitude;
+        return getAmplitude();
     }
 
     private double probablyNegative(double x) {
@@ -57,10 +57,50 @@ class Snowflake extends GCompound {
     }
 
     public void reset() {
-        dY = rnd.nextInt(1, 3);
-        amplitude = probablyNegative(rnd.nextDouble(0.5, 5));
-        phase = rnd.nextDouble(0,360.0);
-        rotation = probablyNegative(rnd.nextDouble(0.5, 5));
-        polygon.setColor(rnd.nextColor());
+        setdY(rnd.nextInt(1, 3));
+        setAmplitude(probablyNegative(rnd.nextDouble(0.5, 5)));
+        setPhase(rnd.nextDouble(0,360.0));
+        setRotation(probablyNegative(rnd.nextDouble(0.5, 5)));
+        getPolygon().setColor(rnd.nextColor());
+    }
+
+    public int getdY() {
+        return dY;
+    }
+
+    public void setdY(int dY) {
+        this.dY = dY;
+    }
+
+    public double getPhase() {
+        return phase;
+    }
+
+    public void setPhase(double phase) {
+        this.phase = phase;
+    }
+
+    public double getAmplitude() {
+        return amplitude;
+    }
+
+    public void setAmplitude(double amplitude) {
+        this.amplitude = amplitude;
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
+
+    public GPolygon getPolygon() {
+        return polygon;
+    }
+
+    public void setPolygon(GPolygon polygon) {
+        this.polygon = polygon;
     }
 }
