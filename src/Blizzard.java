@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class Something extends WindowProgram {
+public class Blizzard extends WindowProgram {
     private static final int SNOW_COUNT = 250;
 
     ArrayList<Snowflake> snow = new ArrayList<>();
