@@ -1,38 +1,28 @@
-import acm.graphics.GCompound;
 import acm.graphics.GPolygon;
 import acm.util.RandomGenerator;
 
-class Snowflake extends GCompound {
-    RandomGenerator rnd = new RandomGenerator();
+class Snowflake extends GPolygon {
+    RandomGenerator rnd = RandomGenerator.getInstance();
     private int dY;
     private double phase;
     private double amplitude;
     private double rotation;
-    private GPolygon polygon;
-
 
     public Snowflake() {
-        GPolygon snowflake = makePolygon();
-        add(snowflake);
-        this.setPolygon(snowflake);
-        reset();
-    }
-
-    private GPolygon makePolygon() {
-        GPolygon poly = new GPolygon();
+        super();
         double polyRadius = rnd.nextDouble(4, 15);
         double beams = rnd.nextInt(5, 12);
         double beamsAngle = 0;
         double beamsAngleIncrement = 360.0 / beams;
 
-        poly.addVertex(0, 0);
+        addVertex(0, 0);
         for (int i = 0; i < beams; i++) {
-            poly.addPolarEdge(polyRadius, beamsAngle);
-            poly.addPolarEdge(polyRadius, beamsAngle + 180);
+            addPolarEdge(polyRadius, beamsAngle);
+            addPolarEdge(polyRadius, beamsAngle + 180);
             beamsAngle += beamsAngleIncrement;
         }
-        poly.setColor(rnd.nextColor());
-        return poly;
+        setColor(rnd.nextColor());
+        reset();
     }
 
     private double probablyNegative(double x) {
@@ -48,7 +38,7 @@ class Snowflake extends GCompound {
         setAmplitude(probablyNegative(rnd.nextDouble(0.5, 5)));
         setPhase(rnd.nextDouble(0,360.0));
         setRotation(probablyNegative(rnd.nextDouble(0.5, 5)));
-        getPolygon().setColor(rnd.nextColor());
+        setColor(rnd.nextColor());
     }
 
     public int getdY() {
@@ -83,11 +73,4 @@ class Snowflake extends GCompound {
         this.rotation = rotation;
     }
 
-    public GPolygon getPolygon() {
-        return polygon;
-    }
-
-    public void setPolygon(GPolygon polygon) {
-        this.polygon = polygon;
-    }
 }

@@ -1,15 +1,14 @@
 import acm.util.RandomGenerator;
 import com.shpp.cs.a.graphics.WindowProgram;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class Blizzard extends WindowProgram {
     private static final int SNOW_COUNT = 250;
 
-    ArrayList<Snowflake> snow = new ArrayList<>();
-    RandomGenerator rnd = new RandomGenerator();
+    Snowflake[] snow = new Snowflake[SNOW_COUNT];
+    RandomGenerator rnd = RandomGenerator.getInstance();
     private double wind = 0;
 
     public double getWind() {
@@ -21,7 +20,6 @@ public class Blizzard extends WindowProgram {
     }
 
     public void run() {
-        getMenuBar().setVisible(false);
         setBackground(Color.BLACK);
         addMouseListeners();
         makeItSnow();
@@ -33,7 +31,7 @@ public class Blizzard extends WindowProgram {
             for (Snowflake snowflake : snow) {
                 double dX = (snowflake.getAmplitude() * Math.sin(snowflake.getPhase())) / snowflake.getdY();
                 snowflake.move(dX + getWind(), snowflake.getdY());
-                snowflake.getPolygon().rotate(snowflake.getRotation());
+                snowflake.rotate(snowflake.getRotation());
                 snowflake.setPhase(snowflake.getPhase() + 0.1);
                 if (snowflake.getPhase() >= 360) {
                     snowflake.setPhase(0);
@@ -51,14 +49,14 @@ public class Blizzard extends WindowProgram {
 
         for (int i = 0; i < SNOW_COUNT; i++) {
             Snowflake snowflake = new Snowflake();
-            snow.add(snowflake);
+            snow[i] = snowflake;
             add(snowflake, rnd.nextDouble(0, getWidth()), rnd.nextDouble(0, getHeight()));
         }
     }
 
     public void mouseClicked(MouseEvent e) {
         for (Snowflake snowflake : snow) {
-            snowflake.getPolygon().setColor(rnd.nextColor());
+            snowflake.setColor(rnd.nextColor());
         }
     }
 
