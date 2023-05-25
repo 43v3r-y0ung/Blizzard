@@ -3,7 +3,7 @@ import acm.util.RandomGenerator;
 
 class Snowflake extends GPolygon {
     RandomGenerator rnd = RandomGenerator.getInstance();
-    private int dY;
+    private double dY;
     private double phase;
     private double amplitude;
     private double rotation;
@@ -14,38 +14,32 @@ class Snowflake extends GPolygon {
         double beams = rnd.nextInt(5, 12);
         double beamsAngle = 0;
         double beamsAngleIncrement = 360.0 / beams;
-
         addVertex(0, 0);
         for (int i = 0; i < beams; i++) {
             addPolarEdge(polyRadius, beamsAngle);
             addPolarEdge(polyRadius, beamsAngle + 180);
             beamsAngle += beamsAngleIncrement;
         }
-        setColor(rnd.nextColor());
         reset();
     }
 
     private double probablyNegative(double x) {
-        if (rnd.nextBoolean()) {
-            return x;
-        } else {
-            return -x;
-        }
+        return rnd.nextBoolean() ? x : -x;
     }
 
     public void reset() {
-        setdY(rnd.nextInt(1, 3));
+        setdY(rnd.nextDouble(1, 3));
         setAmplitude(probablyNegative(rnd.nextDouble(0.5, 5)));
-        setPhase(rnd.nextDouble(0,360.0));
+        setPhase(rnd.nextDouble(0, 360.0));
         setRotation(probablyNegative(rnd.nextDouble(0.5, 5)));
         setColor(rnd.nextColor());
     }
 
-    public int getdY() {
+    public double getdY() {
         return dY;
     }
 
-    public void setdY(int dY) {
+    public void setdY(double dY) {
         this.dY = dY;
     }
 
@@ -73,4 +67,7 @@ class Snowflake extends GPolygon {
         this.rotation = rotation;
     }
 
+    public void incrementPhase(double increment) {
+        setPhase(getPhase() + increment);
+    }
 }

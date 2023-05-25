@@ -1,7 +1,6 @@
 import acm.util.RandomGenerator;
 import com.shpp.cs.a.graphics.WindowProgram;
-
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class Blizzard extends WindowProgram {
@@ -32,7 +31,7 @@ public class Blizzard extends WindowProgram {
                 double dX = (snowflake.getAmplitude() * Math.sin(snowflake.getPhase())) / snowflake.getdY();
                 snowflake.move(dX + getWind(), snowflake.getdY());
                 snowflake.rotate(snowflake.getRotation());
-                snowflake.setPhase(snowflake.getPhase() + 0.1);
+                snowflake.incrementPhase(0.1);
                 if (snowflake.getPhase() >= 360) {
                     snowflake.setPhase(0);
                 }
@@ -46,7 +45,6 @@ public class Blizzard extends WindowProgram {
     }
 
     private void createSnow() {
-
         for (int i = 0; i < SNOW_COUNT; i++) {
             Snowflake snowflake = new Snowflake();
             snow[i] = snowflake;
