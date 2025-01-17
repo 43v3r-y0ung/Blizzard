@@ -39,6 +39,14 @@ public class Blizzard extends WindowProgram {
                     snowflake.setLocation(rnd.nextDouble(0, getWidth()), 0);
                     snowflake.reset();
                 }
+                if (snowflake.getX() < 0) {
+                    snowflake.setLocation(getWidth(), snowflake.getY());
+                    snowflake.reset();
+                }
+                if (snowflake.getX() > getWidth()) {
+                    snowflake.setLocation(0, snowflake.getY());
+                    snowflake.reset();
+                }
             }
             pause(1000.0 / 48);
         }
@@ -67,7 +75,4 @@ public class Blizzard extends WindowProgram {
         }
     }
 
-    public void mouseExited(MouseEvent e) {
-        setWind(0);
-    }
 }
